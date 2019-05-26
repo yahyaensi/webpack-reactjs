@@ -9,7 +9,7 @@ const config = merge(baseConfig, {
   mode: "development",
   devtool: "inline-source-map",
   devServer: {
-    contentBase: "src/",
+    contentBase: SRC_DIR,
     port: 9500,
     hot: true,
     open: true
