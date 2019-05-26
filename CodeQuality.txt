@@ -4,8 +4,10 @@
     stylelint (Modern CSS/SCSS/Less linter)
 
 2) Install the foolowing packages:
+    npm install --save-dev eslint
     npm install --save-dev prettier-eslint (a tool that formats your JavaScript using Prettier followed by eslint --fix)
     npm install --save-dev prettier-eslint-cli (a tool that’ll help you run all of your files through prettier-eslint at once)
+    npm install --save-dev stylelint
     npm install --save-dev prettier-stylelint (a tool that formats your CSS/SCSS with Prettier followed by stylelint —-fix)
 
 3) Create a .vscode folder then a settings.json file inside with the following configuration:
@@ -46,3 +48,6 @@
         {
             "extends": ["stylelint-prettier/recommended"]
         }
+
+7) Install the following packages which are used in .eslintrc
+    npm install --save-dev babel-eslint eslint-config-airbnb eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react 
