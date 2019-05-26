@@ -1,42 +1,42 @@
 /* This file will contain settings that are common across all environments in your application.
    Good candidates are entry files, plugins and loaders.*/
 
-const path = require("path");
-const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 /* Contants */
-var DIST_DIR = path.resolve(__dirname, "dist");
-var SRC_DIR = path.resolve(__dirname, "src");
+var DIST_DIR = path.resolve(__dirname, 'dist');
+var SRC_DIR = path.resolve(__dirname, 'src');
 
 const baseConfig = {
-  entry: SRC_DIR + "/index.js",
+  entry: SRC_DIR + '/index.js',
   output: {
-    path: DIST_DIR + "/app",
-    filename: "bundle.js",
-    publicPath: "/app/"
+    path: DIST_DIR + '/app',
+    filename: 'bundle.js',
+    publicPath: '/app/'
   },
   plugins: [
     // cleans dist folder before each build
     new CleanWebpackPlugin(),
     // regenerate html file and add automatically bundles to it
     new HtmlWebpackPlugin({
-      template: SRC_DIR + "/index.ejs",
-      filename: DIST_DIR + "/index.html",
-      inject: "body"
+      template: SRC_DIR + '/index.ejs',
+      filename: DIST_DIR + '/index.html',
+      inject: 'body'
     }),
     /* This plugin extracts CSS into separate files. It creates a CSS file per JS file which contains CSS.*/
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
       filename:
-        process.env.NODE_ENV === "development"
-          ? "[name].css"
-          : "[name].[hash].css",
+        process.env.NODE_ENV === 'development'
+          ? '[name].css'
+          : '[name].[hash].css',
       chunkFilename:
-        process.env.NODE_ENV === "development" ? "[id].css" : "[id].[hash].css"
+        process.env.NODE_ENV === 'development' ? '[id].css' : '[id].[hash].css'
     })
   ],
   module: {
@@ -52,14 +52,14 @@ const baseConfig = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
+          loader: 'babel-loader'
         }
       },
       {
         test: /\.html$/,
         use: [
           {
-            loader: "html-loader"
+            loader: 'html-loader'
           }
         ]
       },
@@ -71,19 +71,19 @@ const baseConfig = {
             loader: MiniCssExtractPlugin.loader,
             options: {
               // only enable hot in development
-              hmr: process.env.NODE_ENV === "development",
+              hmr: process.env.NODE_ENV === 'development',
               // if hmr does not work, this is a forceful method.
               reloadAll: true
             }
           },
           /* The css-loader interprets @import and url() like import/require() and will resolve them */
-          { loader: "css-loader", options: { importLoaders: 1 } }, // recommended config according to postcss-loader website
+          { loader: 'css-loader', options: { importLoaders: 1 } }, // recommended config according to postcss-loader website
           /* requires postcss.config.js 
              When postcss-loader is used standalone (without css-loader) don't use @import in your CSS, 
              since this can lead to quite bloated bundles
           */
-          "postcss-loader",
-          "sass-loader" // compiles Sass to CSS, using Node Sass by default
+          'postcss-loader',
+          'sass-loader' // compiles Sass to CSS, using Node Sass by default
           /* Style-Loader embeds the CSS as a string into the JS bundle (or module) itself so 
              it won't work with MiniCssExtractPlugin */
           /* "style-loader" */
@@ -94,14 +94,14 @@ const baseConfig = {
         test: /\.(png|jpg|jpeg|gif|svg|ttf|otf|eot|woff|woff2)/,
         use: [
           {
-            loader: "file-loader",
+            loader: 'file-loader',
             options: {
               name(file) {
-                if (process.env.NODE_ENV === "development") {
-                  return "[path][name].[ext]";
+                if (process.env.NODE_ENV === 'development') {
+                  return '[path][name].[ext]';
                 }
 
-                return "[hash].[ext]";
+                return '[hash].[ext]';
               }
             }
           }
@@ -109,14 +109,18 @@ const baseConfig = {
       },
       {
         test: /\.(csv|tsv)$/,
-        use: ["csv-loader"]
+        use: ['csv-loader']
       },
       {
         test: /\.xml$/,
-        use: ["xml-loader"]
+        use: ['xml-loader']
       }
     ]
-  }
+  },
+  resolve: {
+    modules: [`${SRC_DIR}/app/`, './node_modules'],
+    extensions: ['.js', '.jsx', '.json', '.scss']
+  },
 };
 
 module.exports = {
