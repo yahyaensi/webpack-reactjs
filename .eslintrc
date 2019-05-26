@@ -1,5 +1,10 @@
 {
-  "extends": ["airbnb", "plugin:prettier/recommended"],
+  "extends": [
+    "airbnb",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
   "env": {
     "browser": true,
     "commonjs": true,
@@ -7,7 +12,6 @@
     "node": true
   },
   "parser": "babel-eslint",
-  "rules": {
-    "arrow-parens": ["error", "always"]
-  }
+  "plugins": ["react"],
+  "rules": {}
 }

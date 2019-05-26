@@ -49,5 +49,10 @@
             "extends": ["stylelint-prettier/recommended"]
         }
 
-7) Install the following packages which are used in .eslintrc
-    npm install --save-dev babel-eslint eslint-config-airbnb eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react 
+7) Install the following packages which are used in .eslintrc:
+    a) For analysing js|jsx files: 
+        npm install --save-dev babel-eslint 
+    b) To use react recommended rules:
+        npm install --save-dev eslint-plugin-react
+    c) To use airbnb recommended rules:
+        npm install --save-dev eslint-config-airbnb eslint-plugin-import eslint-plugin-jsx-a11y
