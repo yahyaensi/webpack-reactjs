@@ -9,7 +9,7 @@ const config = merge(baseConfig, {
   mode: "development",
   devtool: "inline-source-map",
   devServer: {
-    contentBase: SRC_DIR,
+    contentBase: "src/",
     port: 9500,
     hot: true,
     open: true
@@ -21,10 +21,10 @@ const config = merge(baseConfig, {
       DEBUG: true
     }),
     // handles hot deployment
-    new webpack.HotModuleReplacementPlugin(),
-    new BundleAnalyzerPlugin({
+    new webpack.HotModuleReplacementPlugin()
+    /*new BundleAnalyzerPlugin({
       defaultSizes: "gzip"
-    })
+    })*/
   ]
 });
 
