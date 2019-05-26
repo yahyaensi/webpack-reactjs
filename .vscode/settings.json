@@ -1,0 +1,10 @@
+{
+  // we don’t need ESLint to fix our code for us directly, since prettier-eslint will be running eslint --fix for us anyways.
+  "eslint.autoFixOnSave": false,
+  // runs Prettier with the above options on every file save, so you never have to manually invoke VSCode’s format command.
+  "editor.formatOnSave": true,
+  // tells Prettier to use prettier-eslint instead of Prettier
+  "prettier.eslintIntegration": true,
+  // tells Prettier to use prettier-stylelint instead of Prettier
+  "prettier.stylelintIntegration": true
+}

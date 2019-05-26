@@ -1,0 +1,48 @@
+1) Install in VSCODE the following extensions:
+    Prettier - Code formatter (plugin for prettier/prettier)
+    ESLint (JavaScript linter)
+    stylelint (Modern CSS/SCSS/Less linter)
+
+2) Install the foolowing packages:
+    npm install --save-dev prettier-eslint (a tool that formats your JavaScript using Prettier followed by eslint --fix)
+    npm install --save-dev prettier-eslint-cli (a tool that’ll help you run all of your files through prettier-eslint at once)
+    npm install --save-dev prettier-stylelint (a tool that formats your CSS/SCSS with Prettier followed by stylelint —-fix)
+
+3) Create a .vscode folder then a settings.json file inside with the following configuration:
+    {
+        // we don’t need ESLint to fix our code for us directly, since prettier-eslint will be running eslint --fix for us anyways.
+        "eslint.autoFixOnSave": false,
+        // runs Prettier with the above options on every file save, so you never have to manually invoke VSCode’s format command.
+        "editor.formatOnSave": true,
+        // tells Prettier to use prettier-eslint instead of Prettier
+        "prettier.eslintIntegration": true,
+        // tells Prettier to use prettier-stylelint instead of Prettier
+        "prettier.stylelintIntegration": true
+    }
+
+4) Write scripts inside your package.json targeting the existing files in your codebase that you wish to run through 
+   prettier-eslint and prettier-stylelint.
+   The --write flag writes the changes in-place for the file currently being formatted. So, be careful and make sure 
+   that all of your existing files are under source control and that there are no uncommited changed.
+
+    "scripts": {
+        "fix-code": "prettier-eslint --write \"src/**/*.{js,jsx}\"",
+        "fix-styles": "prettier-stylelint --write \"src/**/*.{css,scss}\""
+    }
+
+5) Integrating Prettier and Eslint rules 
+    a) Intall eslint-config-prettier (a config that disables rules that conflict with Prettier)
+    b) Install eslint-plugin-prettier (a plugin that adds a rule that formats content using Prettier)
+    c) eslint-plugin-prettier exposes a "recommended" configuration that configures both eslint-plugin-prettier 
+       and eslint-config-prettier in a single step. Place it in .eslintrc:
+        {
+            "extends": ["plugin:prettier/recommended"]
+        }
+6) Integrating Prettier and Stylelint rules 
+    a) Intall stylelint-config-prettier (a config that disables rules that conflict with Prettier)
+    b) Install stylelint-prettier (a plugin that adds a rule that formats content using Prettier)
+    c) stylelint-prettier exposes a "recommended" configuration that configures both stylelint-prettier 
+       and stylelint-config-prettier in a single step. Place it in .stylelintrc:
+        {
+            "extends": ["stylelint-prettier/recommended"]
+        }
