@@ -27,11 +27,15 @@ const baseConfig = {
       filename: DIST_DIR + '/index.html',
       inject: 'body'
     }),
+    new HtmlWebpackPlugin({
+      template: SRC_DIR + '/index.ejs',
+      filename: SRC_DIR + '/index.html',
+      inject: 'body'
+    }),
     /* This plugin extracts CSS into separate files. It creates a CSS file per JS file which contains CSS.*/
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: '[name].[hash].css',
       chunkFilename:
         process.env.NODE_ENV === 'development' ? '[id].css' : '[id].[hash].css'
     })
