@@ -1,18 +1,16 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
 
-export class User extends React.Component {
-  onNavigateHome() {
-    browserHistory.push('/home');
-  }
+class User extends React.Component {
+  onNavigateHome = () => this.props.history.push('/');
 
   render() {
+    const { params } = this.props.match;
     return (
       <div>
         <h3>The User Page</h3>
         <p>
           User ID:
-          {this.props.params.id}
+          {params.id}
         </p>
         <button onClick={this.onNavigateHome} className="btn btn-primary">
           Go Home!
@@ -21,3 +19,5 @@ export class User extends React.Component {
     );
   }
 }
+
+export default User;

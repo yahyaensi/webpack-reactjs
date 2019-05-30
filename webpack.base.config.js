@@ -12,7 +12,7 @@ var DIST_DIR = path.resolve(__dirname, 'dist');
 var SRC_DIR = path.resolve(__dirname, 'src');
 
 const baseConfig = {
-  entry: SRC_DIR + '/index.js',
+  entry: SRC_DIR + '/index.jsx',
   output: {
     path: DIST_DIR + '/app',
     filename: 'bundle.js',
@@ -31,10 +31,7 @@ const baseConfig = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename:
-        process.env.NODE_ENV === 'development'
-          ? '[name].css'
-          : '[name].[hash].css',
+      filename: '[name].[hash].css',
       chunkFilename:
         process.env.NODE_ENV === 'development' ? '[id].css' : '[id].[hash].css'
     })
@@ -120,7 +117,7 @@ const baseConfig = {
   resolve: {
     modules: [`${SRC_DIR}/app/`, './node_modules'],
     extensions: ['.js', '.jsx', '.json', '.scss']
-  },
+  }
 };
 
 module.exports = {
