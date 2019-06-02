@@ -3,7 +3,10 @@
     "airbnb",
     "plugin:jest/recommended",
     "plugin:react/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "prettier/flowtype",
+    "prettier/react",
+    "prettier/standard"
   ],
 
   // Environments - which environments your script is designed to run in. Each environment brings with it a certain
@@ -26,9 +29,9 @@
       "jsx": true
     }
   },
+  "plugins": ["react"],
   // Rules - which rules are enabled and at what error level.
   "rules": {
-    "prettier/prettier": ["error"],
     "linebreak-style": 0,
     "class-methods-use-this": 0,
     "consistent-return": 0,
