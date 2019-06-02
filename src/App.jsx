@@ -5,7 +5,7 @@ import Home from './components/Home';
 import Contact from './components/Contact';
 import User from './components/User';
 import Error from './components/Error';
-import Header from './components/template/Header';
+import Header from './components/template/Header'; 
 
 const App = () => {
   return (
