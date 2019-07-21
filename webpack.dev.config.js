@@ -1,11 +1,11 @@
 /* Common settings in development could be source maps, a dev server or different settings for file loaders. */
 
-const { baseConfig, SRC_DIR, DIST_DIR } = require('./webpack.base.config');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { baseConfig, SRC_DIR } = require('./webpack.base.config');
 
-const config = merge(baseConfig, {
+const devConfig = merge(baseConfig, {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
@@ -13,8 +13,14 @@ const config = merge(baseConfig, {
     port: 9500,
     hot: true,
     open: true,
-    /* when we tape url directly in browser, the server will try first to handle the request, if it doesn't find 
-      a response historyApiFallback allow it to resend resend index.html so the front can handle url */
+    /*
+      1) historyApiFallback = false: the rooting is based on # tag, the http server will handle the part of the URL
+         that exists before the # tag and leaves the handling of the part that exists after that tag for the rooter.
+
+      2) historyApiFallback = true: the rooting is not based on # tag, the http server will try to handle the whole URL,
+         if it doesn't find a response, it will resend index.html so the front rooter can handle url
+
+    */
     historyApiFallback: true
   },
   plugins: [
@@ -25,10 +31,10 @@ const config = merge(baseConfig, {
     }),
     // handles hot deployment
     new webpack.HotModuleReplacementPlugin()
-    /*new BundleAnalyzerPlugin({
+    /* new BundleAnalyzerPlugin({
       defaultSizes: "gzip"
-    })*/
+    }) */
   ]
 });
 
-module.exports = config;
+module.exports = devConfig;

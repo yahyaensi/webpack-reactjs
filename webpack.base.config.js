@@ -14,8 +14,8 @@ var SRC_DIR = path.resolve(__dirname, 'src');
 const baseConfig = {
   entry: SRC_DIR + '/index.jsx',
   output: {
-    path: DIST_DIR + '/app',
     filename: 'bundle.js',
+    path: DIST_DIR + '/app',
     publicPath: '/app/'
   },
   plugins: [
@@ -125,7 +125,7 @@ const baseConfig = {
 };
 
 module.exports = {
+  baseConfig,
   SRC_DIR,
-  DIST_DIR,
-  baseConfig
+  DIST_DIR
 };
