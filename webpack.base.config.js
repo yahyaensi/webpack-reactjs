@@ -3,7 +3,6 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
@@ -13,25 +12,9 @@ var SRC_DIR = path.resolve(__dirname, 'src');
 
 const baseConfig = {
   entry: SRC_DIR + '/index.jsx',
-  output: {
-    filename: 'bundle.js',
-    path: DIST_DIR + '/app',
-    publicPath: '/app/'
-  },
   plugins: [
     // cleans dist folder before each build
     new CleanWebpackPlugin(),
-    // regenerate html file and add automatically bundles to it
-    new HtmlWebpackPlugin({
-      template: SRC_DIR + '/index.ejs',
-      filename: DIST_DIR + '/index.html',
-      inject: 'body'
-    }),
-    new HtmlWebpackPlugin({
-      template: SRC_DIR + '/index.ejs',
-      filename: SRC_DIR + '/index.html',
-      inject: 'body'
-    }),
     /* This plugin extracts CSS into separate files. It creates a CSS file per JS file which contains CSS.*/
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
@@ -43,15 +26,16 @@ const baseConfig = {
   module: {
     rules: [
       {
-        /* babel-loader is the Webpack loader responsible for taking in the ES6 code 
-        and making it understandable by the browser of choice.
-        Obsviusly babel-loader makes use of Babel. And Babel must be configured to use a bunch of presets:
+        /* 
+         babel-loader is the Webpack loader responsible for taking in the ES6 code 
+         and making it understandable by the browser of choice.
+         Obsviusly babel-loader makes use of Babel. And Babel must be configured with a .babelrc file to use a bunch of presets:
 
           a) babel preset env for compiling Javascript ES6 code down to ES5 (please note that babel-preset-es2015 is now deprecated)
           b) babel preset react for compiling JSX and other stuff down to Javascript        
         */
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
+        exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader'
         }
@@ -72,13 +56,18 @@ const baseConfig = {
             loader: MiniCssExtractPlugin.loader,
             options: {
               // only enable hot in development
-              hmr: process.env.NODE_ENV === 'development',
+              hmr: false,
               // if hmr does not work, this is a forceful method.
-              reloadAll: true
+              reloadAll: false
             }
           },
-          /* The css-loader interprets @import and url() like import/require() and will resolve them */
-          { loader: 'css-loader', options: { importLoaders: 1 } }, // recommended config according to postcss-loader website
+          /* 
+            The css-loader interprets @import and url() like import/require() and will resolve them 
+            recommended config according to postcss-loader website
+          */
+          { 
+            loader: 'css-loader', options: { importLoaders: 1 } 
+          },
           /* requires postcss.config.js 
              When postcss-loader is used standalone (without css-loader) don't use @import in your CSS, 
              since this can lead to quite bloated bundles
@@ -119,7 +108,7 @@ const baseConfig = {
     ]
   },
   resolve: {
-    modules: [`${SRC_DIR}/app/`, './node_modules'],
+    modules: [`${SRC_DIR}/`, './node_modules'],
     extensions: ['.js', '.jsx', '.json', '.scss']
   }
 };

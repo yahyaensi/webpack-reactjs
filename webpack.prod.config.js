@@ -1,13 +1,14 @@
 /* 
-In production it could include modification of assets, extracting CSS into a separate file
-and outputting the chunks to a build directory. 
+  In production it could include modification of assets, extracting CSS into a separate file
+  and outputting the chunks to a build directory. 
 */
 
-const { baseConfig, SRC_DIR, DIST_DIR } = require('./webpack.base.config');
 const webpack = require("webpack");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require("webpack-merge");
 const TerserJSPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const { baseConfig, SRC_DIR, DIST_DIR } = require('./webpack.base.config');
 
 const prodConfig = merge(baseConfig, {
   /* webpack v4+ will minify the code by default in production mode
@@ -20,8 +21,8 @@ const prodConfig = merge(baseConfig, {
   */
   mode: "production",
   output: {
-    filename: "[name].bundle.js",
-    path: distDir
+    filename: '[name].bundle.[chunkhash].js',
+    path: DIST_DIR
   },
   optimization: {
     /*
@@ -39,27 +40,15 @@ const prodConfig = merge(baseConfig, {
     // process.env injected by node into app to give access to system environment variables
     new webpack.EnvironmentPlugin({
       DEBUG: false
+    }),
+    // regenerate html file and add automatically bundles to it
+    new HtmlWebpackPlugin({
+      template: SRC_DIR + '/index.ejs',
+      filename: DIST_DIR + '/index.html',
+      inject: 'body'
     })
-  ],
-  module: {
-    rules: [
-      {
-        test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env"]
-          }
-        }
-      }
-    ]
-  }
+  ]
 });
 
 
-module.exports = {
-  prodConfig,
-  SRC_DIR,
-  DIST_DIR
-};
+module.exports = prodConfig;

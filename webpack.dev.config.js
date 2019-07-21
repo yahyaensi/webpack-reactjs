@@ -2,8 +2,9 @@
 
 const webpack = require('webpack');
 const merge = require('webpack-merge');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const { baseConfig, SRC_DIR } = require('./webpack.base.config');
+const { baseConfig, SRC_DIR, DIST_DIR } = require('./webpack.base.config');
 
 const devConfig = merge(baseConfig, {
   mode: 'development',
@@ -28,6 +29,9 @@ const devConfig = merge(baseConfig, {
     // process.env injected by node into app to give access to system environment variables
     new webpack.EnvironmentPlugin({
       DEBUG: true
+    }),
+    new HtmlWebpackPlugin({
+      template: SRC_DIR + '/index.ejs'
     }),
     // handles hot deployment
     new webpack.HotModuleReplacementPlugin()
